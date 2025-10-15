@@ -2,47 +2,51 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define n 100
+
 int main(void)
 {
-    //char str[30];
-    char *str= (char*)malloc(sizeof(char) * 100);
-    fgets(str, sizeof(str), stdin);
-    for (int i = 0; str[i] != '\0'; i++)
-    {
-        if (isalpha(str[i]) != 0)
-        {
-            if (str[i] < 'a')
-            {
-                str[i] = str[i] + 32;
-            }
-        }
-        else
-        {
-            while (isalpha(str[i]) == 0)
-            {
-                i ++;
-            }
-        }
-        printf("%c", str[i]);
-    }
+    char *str= (char*)malloc(sizeof(char) * n);
+    fgets(str, n, stdin);
 
+    char arrayPulito[n];
     char *pInizio = &str[0];
-    char *pFine = &str[sizeof(str)-1];
+    char *pFine = &str[n-1];
 
-    for (int i  = 0; pInizio < pFine; i++)
+    for (int i = 0; *pInizio != '\0'; )
     {
-        if (pInizio[i] != pFine[sizeof(str)-1-i])
+        if (isalpha(*pInizio) != 0)
         {
-            printf("Non palindromo");
-            free(str);
-            str = NULL;
-            return 0;
+            if (*pInizio < 'a')
+            {
+                *pInizio += 32;
+            }
+            arrayPulito[i] = *pInizio;
+            i ++;
+
         }
         pInizio++;
-        pFine--;
     }
+    printf("%s", arrayPulito);
+    //fino a qui funziona e ritorna una stringa pulita
 
-    printf("Palindromo");
+
+
+        for (int i  = 0; pInizio < pFine; i++)
+        {
+            if (pInizio[i] != pFine[n-1-i])
+            {
+                printf("Non palindromo");
+                free(str);
+                str = NULL;
+                return 0;
+            }
+            pInizio++;
+            pFine--;
+        }
+
+        printf("Palindromo");
+
     free(str);
     str = NULL;
     return 0;
