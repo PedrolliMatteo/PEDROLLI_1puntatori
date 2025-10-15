@@ -9,11 +9,11 @@ int main(void)
     char *str= (char*)malloc(sizeof(char) * n);
     fgets(str, n, stdin);
 
-    char arrayPulito[n];
+    char arrayPulito[n-1];
     char *pInizio = &str[0];
-    char *pFine = &str[n-1];
+    int i = 0;
 
-    for (int i = 0; *pInizio != '\0'; )
+    for (i = 0; *pInizio != '\0'; )
     {
         if (isalpha(*pInizio) != 0)
         {
@@ -27,26 +27,26 @@ int main(void)
         }
         pInizio++;
     }
-    printf("%s", arrayPulito);
+    //printf("%s", arrayPulito);
     //fino a qui funziona e ritorna una stringa pulita
 
+    pInizio = arrayPulito;
+    char *pFine = &arrayPulito[i -1];
 
-
-        for (int i  = 0; pInizio < pFine; i++)
+    for (i = 0; pInizio < pFine; i ++)
+    {
+        if (*pInizio != *pFine)
         {
-            if (pInizio[i] != pFine[n-1-i])
-            {
-                printf("Non palindromo");
-                free(str);
-                str = NULL;
-                return 0;
-            }
-            pInizio++;
-            pFine--;
+            printf("Non palindromo");
+            free(str);
+            str = NULL;
+            return 0;
         }
+        pInizio ++;
+        pFine --;
+    }
 
-        printf("Palindromo");
-
+    printf("Palindromo");
     free(str);
     str = NULL;
     return 0;
